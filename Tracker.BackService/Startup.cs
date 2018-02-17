@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
+using Tracker.BackService.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Tracker.BackService
 {
@@ -24,8 +26,9 @@ namespace Tracker.BackService
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddTransient<Models.Repository>();
       services.AddMvc();
+
+      services.AddDbContext<TrackerContext>(options => options.UseSqlite("Data Source=WalkTracker.db"));
 
       services.AddSwaggerGen(options =>
       {
@@ -38,7 +41,7 @@ namespace Tracker.BackService
     {
       app.UseSwagger();
 
-      if(env.IsDevelopment() || env.IsStaging())
+      if (env.IsDevelopment() || env.IsStaging())
       {
         app.UseSwaggerUI(options =>
         {
@@ -52,6 +55,8 @@ namespace Tracker.BackService
       }
 
       app.UseMvc();
+
+      TrackerContext.SeedData(app.ApplicationServices);
     }
   }
 }
