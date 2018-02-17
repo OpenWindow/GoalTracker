@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tracker.Identity", "Tracker.Identity\Tracker.Identity.csproj", "{8D5D9D1C-0598-4968-809B-90C2E286A378}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tracker.Identity", "Tracker.Identity\Tracker.Identity.csproj", "{8D5D9D1C-0598-4968-809B-90C2E286A378}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tracker.MVCClient", "Tracker.MVCClient\Tracker.MVCClient.csproj", "{24B041CB-B147-4E55-8C99-D30C50081522}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tracker.BackService", "Tracker.BackService\Tracker.BackService.csproj", "{4E1F2459-FD9F-44EF-99B6-860DC5E6AAB0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{8D5D9D1C-0598-4968-809B-90C2E286A378}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D5D9D1C-0598-4968-809B-90C2E286A378}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D5D9D1C-0598-4968-809B-90C2E286A378}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24B041CB-B147-4E55-8C99-D30C50081522}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24B041CB-B147-4E55-8C99-D30C50081522}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24B041CB-B147-4E55-8C99-D30C50081522}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24B041CB-B147-4E55-8C99-D30C50081522}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E1F2459-FD9F-44EF-99B6-860DC5E6AAB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E1F2459-FD9F-44EF-99B6-860DC5E6AAB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E1F2459-FD9F-44EF-99B6-860DC5E6AAB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E1F2459-FD9F-44EF-99B6-860DC5E6AAB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
