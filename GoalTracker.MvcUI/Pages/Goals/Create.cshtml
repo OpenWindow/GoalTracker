@@ -1,0 +1,54 @@
+﻿@page
+@model GoalTracker.MvcUI.Pages.Goals.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>WalkGoal</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="WalkGoal.Name" class="control-label"></label>
+                <input asp-for="WalkGoal.Name" class="form-control" />
+                <span asp-validation-for="WalkGoal.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WalkGoal.StartDate" class="control-label"></label>
+                <input asp-for="WalkGoal.StartDate" class="form-control" />
+                <span asp-validation-for="WalkGoal.StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WalkGoal.EndDate" class="control-label"></label>
+                <input asp-for="WalkGoal.EndDate" class="form-control" />
+                <span asp-validation-for="WalkGoal.EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WalkGoal.TargetDistance" class="control-label"></label>
+                <input asp-for="WalkGoal.TargetDistance" class="form-control" />
+                <span asp-validation-for="WalkGoal.TargetDistance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WalkGoal.Description" class="control-label"></label>
+                <input asp-for="WalkGoal.Description" class="form-control" />
+                <span asp-validation-for="WalkGoal.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

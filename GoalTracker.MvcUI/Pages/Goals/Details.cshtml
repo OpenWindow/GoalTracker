@@ -1,0 +1,49 @@
+﻿@page
+@model GoalTracker.MvcUI.Pages.Goals.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>WalkGoal</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.WalkGoal.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WalkGoal.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.WalkGoal.StartDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WalkGoal.StartDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.WalkGoal.EndDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WalkGoal.EndDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.WalkGoal.TargetDistance)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WalkGoal.TargetDistance)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.WalkGoal.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WalkGoal.Description)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.WalkGoal.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
