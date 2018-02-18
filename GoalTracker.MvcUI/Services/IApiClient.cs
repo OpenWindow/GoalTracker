@@ -20,6 +20,7 @@ namespace GoalTracker.MvcUI.Services
   public class ApiClient : IApiClient
   {
     private readonly HttpClient _HttpClient;
+    const string WALKGOALS_ENDPOINT = "/api/WalkGoals";
     public ApiClient(HttpClient httpClient)
     {
       _HttpClient = httpClient;
@@ -27,13 +28,13 @@ namespace GoalTracker.MvcUI.Services
 
     public async Task AddWalkGoalAsync(WalkGoal goalToAdd)
     {
-      var response = await _HttpClient.PostJsonAsync("api/WalkGoals", goalToAdd);
+      var response = await _HttpClient.PostJsonAsync(WALKGOALS_ENDPOINT, goalToAdd);
       response.EnsureSuccessStatusCode();
     }
 
     public async Task<WalkGoal> GetWalkGoalAsync(int id)
     {
-      var response = await _HttpClient.GetAsync($"/api/WalkGoals/{id}");
+      var response = await _HttpClient.GetAsync($"{WALKGOALS_ENDPOINT}/{id}");
       response.EnsureSuccessStatusCode();
 
       return await response.Content.ReadAsJsonAsync<WalkGoal>();
@@ -41,7 +42,7 @@ namespace GoalTracker.MvcUI.Services
 
     public async Task<List<WalkGoal>> GetWalkGoalsAsync()
     {
-      var response = await _HttpClient.GetAsync("/api/WalkGoals");
+      var response = await _HttpClient.GetAsync(WALKGOALS_ENDPOINT);
       response.EnsureSuccessStatusCode();
 
       return await response.Content.ReadAsJsonAsync<List<WalkGoal>>();
@@ -49,13 +50,13 @@ namespace GoalTracker.MvcUI.Services
 
     public async Task PutWalkGoalAsync(WalkGoal goalToUpdate)
     {
-      var response = await _HttpClient.PutJsonAsync("api/WalkGoals", goalToUpdate);
+      var response = await _HttpClient.PutJsonAsync($"{WALKGOALS_ENDPOINT}/{goalToUpdate.Id}", goalToUpdate);
       response.EnsureSuccessStatusCode();
     }
 
     public async Task RemoveWalkGoalAsync(int id)
     {
-      var response = await _HttpClient.DeleteAsync($"api/WalkGoals/{id}");
+      var response = await _HttpClient.DeleteAsync($"{WALKGOALS_ENDPOINT}/{id}");
       response.EnsureSuccessStatusCode();
     }
   }
