@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  backservice:
+    image: tracker.backservice
+    build:
+      context: ./Tracker.BackService
+      dockerfile: Dockerfile
+
+  mvcui:
+    image: goaltracker.mvcui
+    environment:
+      - serviceUrl=http://backservice
+    build:
+      context: ./GoalTracker.MvcUI
+      dockerfile: Dockerfile
+    links:
+      - backservice
+
+  db:
+    image: "microsoft/mssql-server-linux"
