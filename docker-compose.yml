@@ -19,3 +19,9 @@ services:
 
   db:
     image: "microsoft/mssql-server-linux"
+
+  tracker.identity:
+    image: tracker.identity
+    build:
+      context: ./Tracker.Identity
+      dockerfile: Dockerfile

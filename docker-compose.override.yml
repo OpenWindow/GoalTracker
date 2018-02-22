@@ -18,3 +18,8 @@ services:
     environment:
       SA_PASSWORD: "Tracker1234$$"
       ACCEPT_EULA: "Y"
+  tracker.identity:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"

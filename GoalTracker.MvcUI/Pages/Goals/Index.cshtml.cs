@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using GoalTracker.MvcUI.Data;
 using Tracker.BackService.Models;
 using GoalTracker.MvcUI.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GoalTracker.MvcUI.Pages.Goals
 {
+  [Authorize]
   public class IndexModel : PageModel
   {
     private readonly IApiClient _apiClient;

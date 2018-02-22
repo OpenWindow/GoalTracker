@@ -11,13 +11,23 @@ namespace Tracker.Identity
 {
   public class Startup
   {
-    // This method gets called by the runtime. Use this method to add services to the container.
-    // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddMvc();
+
+      services.AddIdentityServer()
+        .AddDeveloperSigningCredential()
+        .AddTestUsers(Config.TestUsers())
+        .AddInMemoryClients(Config.Clients())
+        .AddInMemoryIdentityResources(Config.IdentityResources())
+        .AddInMemoryApiResources(Config.ApiResources());
+
+      // we can configure external authentication here..
+      // ex: google authentication, external identity server authentication etc
+
+
     }
 
-    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {
       if (env.IsDevelopment())
@@ -25,11 +35,10 @@ namespace Tracker.Identity
         app.UseDeveloperExceptionPage();
       }
 
-      // use static files
+      app.UseIdentityServer();
 
-      // use identity server
-
-      // use mvc with default route
+      app.UseStaticFiles();
+      app.UseMvcWithDefaultRoute();
     }
   }
 }
