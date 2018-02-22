@@ -1,17 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using GoalTracker.MvcUI.Data;
 using GoalTracker.MvcUI.Services;
 using System.Net.Http;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace GoalTracker.MvcUI
 {
@@ -27,22 +21,44 @@ namespace GoalTracker.MvcUI
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddDbContext<ApplicationDbContext>(options =>
-          options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-      services.AddIdentity<ApplicationUser, IdentityRole>()
-          .AddEntityFrameworkStores<ApplicationDbContext>()
-          .AddDefaultTokenProviders();
-     
-      services.AddScoped(_ => new HttpClient() { BaseAddress = new Uri(Configuration["serviceUrl"]) });
-      services.AddScoped<IApiClient, ApiClient>();
 
       services.AddMvc()
-          .AddRazorPagesOptions(options =>
-          {
-            options.Conventions.AuthorizeFolder("/Account/Manage");
-            options.Conventions.AuthorizePage("/Account/Logout");
-          });
+         //.AddRazorPagesOptions(options =>
+         //{
+         //  options.Conventions.AuthorizeFolder("/Pages/Goals");
+         //})
+         ;
+
+      JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+      services.AddAuthentication(options =>
+      {
+        options.DefaultScheme = "Cookies";
+        options.DefaultChallengeScheme = "oidc";
+      })
+      .AddCookie("Cookies")
+      .AddOpenIdConnect("oidc", options =>
+      {
+        options.SignInScheme = "Cookies";
+
+        options.Authority = "http://localhost:5000";
+        options.RequireHttpsMetadata = false;
+
+        options.ClientId = "openIdConnectClientMvcUI";
+        
+      })
+        ;
+
+      //services.AddDbContext<ApplicationDbContext>(options =>
+      //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+      //services.AddIdentity<ApplicationUser, IdentityRole>()
+      //    .AddEntityFrameworkStores<ApplicationDbContext>()
+      //    .AddDefaultTokenProviders();
+
+      services.AddScoped(_ => new HttpClient() { BaseAddress = new Uri(Configuration["serviceUrl"]) });
+      services.AddScoped<IApiClient, ApiClient>();
+    
 
       // Register no-op EmailSender used by account confirmation and password reset during development
       // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
