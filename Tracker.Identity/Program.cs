@@ -7,19 +7,35 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Tracker.Identity
 {
-    public class Program
+  public class Program
+  {
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
-        {
-            BuildWebHost(args).Run();
-        }
+      var host = BuildWebHost(args);
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .Build();
+      using (var scope = host.Services.CreateScope())
+      {
+        try
+        {
+          SeedData.EnsureSeedData(scope.ServiceProvider);
+        }
+        catch (Exception ex)
+        {
+          Console.WriteLine($"An error occured while seeding the database: {ex.Message}");
+          throw;
+        }
+      }
+
+      host.Run();
     }
+
+    public static IWebHost BuildWebHost(string[] args) =>
+        WebHost.CreateDefaultBuilder(args)
+            .UseStartup<Startup>()
+            .Build();
+  }
 }

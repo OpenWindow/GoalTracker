@@ -6,25 +6,54 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using System.Reflection;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace Tracker.Identity
 {
   public class Startup
   {
+    public IConfiguration Configuration { get; }
+
+    public Startup(IConfiguration configuration)
+    {
+      this.Configuration = configuration;
+    }
+
     public void ConfigureServices(IServiceCollection services)
     {
+
+      string connectionString = Configuration.GetConnectionString("DefaultConnection");
+      var migrationAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+
       services.AddMvc();
 
+      services.AddDbContext<ApplicationDbContext>(builder =>
+        builder.UseSqlServer(connectionString,
+            sql => sql.MigrationsAssembly(migrationAssembly)));
+
+      services.AddIdentity<IdentityUser, IdentityRole> ()
+        .AddEntityFrameworkStores<ApplicationDbContext>();
+
       services.AddIdentityServer()
+        // store clients, resources in Configuration Store
+        .AddConfigurationStore(options =>
+          options.ConfigureDbContext = builder =>
+            builder.UseSqlServer(connectionString,
+            sql => sql.MigrationsAssembly(migrationAssembly)))
+         // store consents and reference tokens in operational store
+        .AddOperationalStore(options => 
+          options.ConfigureDbContext = builder =>
+            builder.UseSqlServer(connectionString,
+            sql => sql.MigrationsAssembly(migrationAssembly)))
+        .AddAspNetIdentity<IdentityUser>()
         .AddDeveloperSigningCredential()
-        .AddTestUsers(Config.TestUsers())
-        .AddInMemoryClients(Config.Clients())
-        .AddInMemoryIdentityResources(Config.IdentityResources())
-        .AddInMemoryApiResources(Config.ApiResources());
+        ;
 
       // we can configure external authentication here..
       // ex: google authentication, external identity server authentication etc
-
 
     }
 
