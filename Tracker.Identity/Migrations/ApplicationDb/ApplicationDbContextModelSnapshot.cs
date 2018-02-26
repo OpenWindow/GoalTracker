@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 using Tracker.Identity;
+using Tracker.Identity.Data;
 
 namespace Tracker.Identity.Migrations.ApplicationDb
 {

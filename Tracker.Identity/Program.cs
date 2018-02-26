@@ -21,7 +21,7 @@ namespace Tracker.Identity
       {
         try
         {
-          SeedData.EnsureSeedData(scope.ServiceProvider);
+          // SeedData.EnsureSeedData(scope.ServiceProvider);
         }
         catch (Exception ex)
         {

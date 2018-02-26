@@ -11,6 +11,9 @@ using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using IdentityServer4;
+using Tracker.Identity.Data;
+using Tracker.Identity.Models;
+using Tracker.Identity.Services;
 
 namespace Tracker.Identity
 {
@@ -29,28 +32,33 @@ namespace Tracker.Identity
       string connectionString = Configuration.GetConnectionString("DefaultConnection");
       var migrationAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
+      services.AddTransient<IEmailSender, EmailSender>();
       services.AddMvc();
 
       services.AddDbContext<ApplicationDbContext>(builder =>
         builder.UseSqlServer(connectionString,
             sql => sql.MigrationsAssembly(migrationAssembly)));
 
-      services.AddIdentity<IdentityUser, IdentityRole> ()
-        .AddEntityFrameworkStores<ApplicationDbContext>();
+      services.AddIdentity<ApplicationUser, IdentityRole>()
+        .AddEntityFrameworkStores<ApplicationDbContext>()
+        .AddDefaultTokenProviders();
 
       services.AddIdentityServer()
-        // store clients, resources in Configuration Store
-        .AddConfigurationStore(options =>
-          options.ConfigureDbContext = builder =>
-            builder.UseSqlServer(connectionString,
-            sql => sql.MigrationsAssembly(migrationAssembly)))
-         // store consents and reference tokens in operational store
-        .AddOperationalStore(options => 
-          options.ConfigureDbContext = builder =>
-            builder.UseSqlServer(connectionString,
-            sql => sql.MigrationsAssembly(migrationAssembly)))
-        .AddAspNetIdentity<IdentityUser>()
+        .AddAspNetIdentity<ApplicationUser>()
         .AddDeveloperSigningCredential()
+        .AddInMemoryIdentityResources(Config.IdentityResources())
+        .AddInMemoryApiResources(Config.ApiResources())
+        .AddInMemoryClients(Config.Clients())
+        // store clients, resources in Configuration Store
+        //.AddConfigurationStore(options =>
+        //  options.ConfigureDbContext = builder =>
+        //    builder.UseSqlServer(connectionString,
+        //    sql => sql.MigrationsAssembly(migrationAssembly)))
+        //// store consents and reference tokens in operational store
+        //.AddOperationalStore(options =>
+        //  options.ConfigureDbContext = builder =>
+        //    builder.UseSqlServer(connectionString,
+        //    sql => sql.MigrationsAssembly(migrationAssembly)))
         ;
 
       // we can configure external authentication here..
@@ -71,12 +79,24 @@ namespace Tracker.Identity
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
+        app.UseBrowserLink();
+        app.UseDatabaseErrorPage();
       }
+      else
+      {
+        app.UseExceptionHandler("/Home/Error");
+      }
+
+      app.UseStaticFiles();
 
       app.UseIdentityServer();
 
-      app.UseStaticFiles();
-      app.UseMvcWithDefaultRoute();
+      app.UseMvc(routes =>
+      {
+        routes.MapRoute(
+            name: "default",
+            template: "{controller=Home}/{action=Index}/{id?}");
+      });
     }
   }
 }

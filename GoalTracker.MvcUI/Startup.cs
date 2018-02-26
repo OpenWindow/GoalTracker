@@ -45,7 +45,13 @@ namespace GoalTracker.MvcUI
         options.RequireHttpsMetadata = false;
 
         options.ClientId = "openIdConnectClientMvcUI";
-        
+
+        options.ResponseType = "code id_token";
+        options.SaveTokens = true;
+        options.ClientSecret = "secret";
+        options.GetClaimsFromUserInfoEndpoint = true;
+
+
       })
         ;
 
