@@ -6,28 +6,27 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using GoalTracker.MvcUI.Data;
+using Microsoft.AspNetCore.Authentication;
 
 namespace GoalTracker.MvcUI.Controllers
 {
-    [Route("[controller]/[action]")]
-    public class AccountController : Controller
+  [Route("[controller]/[action]")]
+  public class AccountController : Controller
+  {
+    private readonly ILogger _logger;
+
+    public AccountController(ILogger<AccountController> logger)
     {
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly ILogger _logger;
-
-        public AccountController(SignInManager<ApplicationUser> signInManager, ILogger<AccountController> logger)
-        {
-            _signInManager = signInManager;
-            _logger = logger;
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Logout()
-        {
-            await _signInManager.SignOutAsync();
-            _logger.LogInformation("User logged out.");
-            return RedirectToPage("/Index");
-        }
+      _logger = logger;
     }
+
+    public async Task Logout()
+    {
+      //await _signInManager.SignOutAsync();
+      await HttpContext.SignOutAsync("Cookies");
+      await HttpContext.SignOutAsync("oidc");
+      _logger.LogInformation("User logged out.");
+      // return RedirectToPage("/Index");
+    }
+  }
 }
