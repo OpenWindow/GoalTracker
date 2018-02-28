@@ -52,7 +52,7 @@ namespace Tracker.Identity
         {
           ClientId = "openIdConnectClientMvcUI",
           ClientName = "MvcUI",
-          AllowedGrantTypes = GrantTypes.Implicit,
+          AllowedGrantTypes = GrantTypes.Hybrid,
           ClientSecrets = { new Secret("secret".Sha256())},
           AllowedScopes =
           {
