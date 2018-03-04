@@ -25,12 +25,12 @@ namespace Tracker.BackService.Models
     public int TargetDistance { get; set; }
     public string Description { get; set; }
 
-    public bool WalkOnMonday { get; set; }
-    public bool WalkOnTuesday { get; set; }
-    public bool WalkOnWednesday { get; set; }
-    public bool WalkOnThursday { get; set; }
-    public bool WalkOnFriday { get; set; }
-    public bool WalkOnSaturday { get; set; }
-    public bool WalkOnSunday { get; set; }
+    public bool WalkOnMonday { get; set; } = true;
+    public bool WalkOnTuesday { get; set; } = true;
+    public bool WalkOnWednesday { get; set; } = true;
+    public bool WalkOnThursday { get; set; } = true;
+    public bool WalkOnFriday { get; set; } = true;
+    public bool WalkOnSaturday { get; set; } = false;
+    public bool WalkOnSunday { get; set; } = false;
   }
 }
