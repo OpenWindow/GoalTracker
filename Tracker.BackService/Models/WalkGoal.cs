@@ -24,6 +24,8 @@ namespace Tracker.BackService.Models
     [Display(Name="Total Distance to Walk")]
     public int TargetDistance { get; set; }
     public string Description { get; set; }
+    [Display(Name="Check to Archive")]
+    public bool Archive { get; set; }
 
     public bool WalkOnMonday { get; set; } = true;
     public bool WalkOnTuesday { get; set; } = true;
