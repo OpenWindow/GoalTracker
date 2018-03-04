@@ -1,0 +1,62 @@
+﻿@page
+@model IndexModel
+@{
+  ViewData["Title"] = "Home page";
+}
+
+<div class="page-header">
+  <h2>Dashboard</h2>
+</div>
+
+<div class="row">
+  <div class="col-md-6 col-lg-6">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h3> GOAL 2018 - TRACKING</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 text-center">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h4>TODAY</h4>
+          </div>
+          <div class="panel-body">
+            @Model.DashBoard.TodayCurrent
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 text-center">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h4>THIS WEEK</h4>
+          </div>
+          <div class="panel-body">
+            @Model.DashBoard.WeekCurrent
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 text-center">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h4>THIS MONTH</h4>
+          </div>
+          <div class="panel-body">
+            @Model.DashBoard.MonthCurrent
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-lg-6">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h3> GOAL 2018 - Activity</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

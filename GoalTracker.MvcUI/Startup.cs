@@ -23,10 +23,10 @@ namespace GoalTracker.MvcUI
     {
 
       services.AddMvc()
-         //.AddRazorPagesOptions(options =>
-         //{
-         //  options.Conventions.AuthorizeFolder("/Pages/Goals");
-         //})
+         .AddRazorPagesOptions(options =>
+         {
+           options.Conventions.AddPageRoute("/Home/Index", "");
+         })
          ;
 
       //_START_: UNCOMMENT BELOW CODE FOR AUTHENTICATION USING IDENTITY SERVER

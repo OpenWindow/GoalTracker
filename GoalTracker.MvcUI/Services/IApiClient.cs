@@ -1,4 +1,5 @@
 ﻿using GoalTracker.MvcUI.Extensions;
+using GoalTracker.MvcUI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace GoalTracker.MvcUI.Services
   {
     Task<IEnumerable<WalkGoal>> GetWalkGoalsAsync();
     Task<WalkGoal> GetWalkGoalAsync(int id);
+    Task<WalkGoal> GetCurrentWalkGoalAsync();
     Task PutWalkGoalAsync(WalkGoal goalToUpdate);
     Task AddWalkGoalAsync(WalkGoal goalToAdd);
     Task RemoveWalkGoalAsync(int id);
@@ -58,6 +60,14 @@ namespace GoalTracker.MvcUI.Services
     {
       var response = await _HttpClient.DeleteAsync($"{WALKGOALS_ENDPOINT}/{id}");
       response.EnsureSuccessStatusCode();
+    }
+
+    public async Task<WalkGoal> GetCurrentWalkGoalAsync()
+    {
+      var response = await _HttpClient.GetAsync($"{WALKGOALS_ENDPOINT}/current");
+      response.EnsureSuccessStatusCode();
+
+      return await response.Content.ReadAsJsonAsync<WalkGoal>();
     }
   }
 }

@@ -86,5 +86,16 @@ namespace Tracker.BackService.Controllers
 
       return NoContent();
     }
+
+    [HttpGet]
+    [Route("Current")]
+    public async Task<WalkGoal> GetCurrentAsync()
+    {
+      var walkGoal = await _context.WalkGoals.AsNoTracking()
+        .Where(g =>( DateTime.Now >= g.StartDate && DateTime.Now <= g.EndDate) && !g.Archive)
+        .FirstOrDefaultAsync();
+
+      return walkGoal;
+    }
   }
 }
