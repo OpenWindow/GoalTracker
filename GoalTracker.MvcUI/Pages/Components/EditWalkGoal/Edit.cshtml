@@ -11,6 +11,11 @@
   <span asp-validation-for="Name" class="text-danger"></span>
 </div>
 <div class="form-group">
+  <label asp-for="TargetDistance" class="control-label"></label>
+  <input asp-for="TargetDistance" class="form-control" />
+  <span asp-validation-for="TargetDistance" class="text-danger"></span>
+</div>
+<div class="form-group">
   <label asp-for="StartDate" class="control-label"></label>
   <input asp-for="StartDate" class="form-control" />
   <span asp-validation-for="StartDate" class="text-danger"></span>
@@ -21,12 +26,45 @@
   <span asp-validation-for="EndDate" class="text-danger"></span>
 </div>
 <div class="form-group">
-  <label asp-for="TargetDistance" class="control-label"></label>
-  <input asp-for="TargetDistance" class="form-control" />
-  <span asp-validation-for="TargetDistance" class="text-danger"></span>
-</div>
-<div class="form-group">
   <label asp-for="Description" class="control-label"></label>
-  <input asp-for="Description" class="form-control" />
+  <textarea asp-for="Description" class="form-control"></textarea>
   <span asp-validation-for="Description" class="text-danger"></span>
 </div>
+
+  <label class="control-label" value="Walk On">Walk On</label>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" asp-for="WalkOnMonday">Monday
+    </label>
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" asp-for="WalkOnTuesday">Tuesday
+    </label>
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" asp-for="WalkOnWednesday">Wednesday
+    </label>
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" asp-for="WalkOnThursday">Thursday
+    </label>
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" asp-for="WalkOnFriday">Friday
+    </label>
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" asp-for="WalkOnSaturday">Saturday
+    </label>
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" asp-for="WalkOnSunday">Sunday
+    </label>
+  </div>
+

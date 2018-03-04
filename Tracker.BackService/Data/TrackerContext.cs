@@ -46,7 +46,14 @@ namespace Tracker.BackService.Data
             StartDate = new DateTime(2018, 01, 01),
             EndDate = new DateTime(2018, 12, 31),
             Description = "Walk goal for the year 2018",
-            TargetDistance = 1000
+            TargetDistance = 1000,
+            WalkOnMonday = false,
+            WalkOnTuesday = false,
+            WalkOnWednesday = false,
+            WalkOnThursday = false,
+            WalkOnFriday = false,
+            WalkOnSaturday = false,
+            WalkOnSunday = false
           },
 
           new WalkGoal
@@ -56,7 +63,14 @@ namespace Tracker.BackService.Data
             StartDate = new DateTime(2017, 01, 01),
             EndDate = new DateTime(2017, 12, 31),
             Description = "Walk goal for the year 2018",
-            TargetDistance = 1000
+            TargetDistance = 1000,
+            WalkOnMonday = false,
+            WalkOnTuesday = false,
+            WalkOnWednesday = false,
+            WalkOnThursday = false,
+            WalkOnFriday = false,
+            WalkOnSaturday = false,
+            WalkOnSunday = false
           },
         });
 

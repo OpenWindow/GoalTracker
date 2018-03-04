@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace GoalTracker.MvcUI.Pages.Goals
 {
-  [Authorize]
   public class IndexModel : PageModel
   {
     private readonly IApiClient _apiClient;
@@ -22,7 +21,7 @@ namespace GoalTracker.MvcUI.Pages.Goals
       _apiClient = apiClient;
     }
 
-    public IList<WalkGoal> WalkGoals { get; set; }
+    public IEnumerable<WalkGoal> WalkGoals { get; set; }
 
     public async Task OnGetAsync()
     {

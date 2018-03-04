@@ -10,7 +10,7 @@ namespace GoalTracker.MvcUI.Services
 {
   public interface IApiClient
   {
-    Task<List<WalkGoal>> GetWalkGoalsAsync();
+    Task<IEnumerable<WalkGoal>> GetWalkGoalsAsync();
     Task<WalkGoal> GetWalkGoalAsync(int id);
     Task PutWalkGoalAsync(WalkGoal goalToUpdate);
     Task AddWalkGoalAsync(WalkGoal goalToAdd);
@@ -40,12 +40,12 @@ namespace GoalTracker.MvcUI.Services
       return await response.Content.ReadAsJsonAsync<WalkGoal>();
     }
 
-    public async Task<List<WalkGoal>> GetWalkGoalsAsync()
+    public async Task<IEnumerable<WalkGoal>> GetWalkGoalsAsync()
     {
       var response = await _HttpClient.GetAsync(WALKGOALS_ENDPOINT);
       response.EnsureSuccessStatusCode();
 
-      return await response.Content.ReadAsJsonAsync<List<WalkGoal>>();
+      return await response.Content.ReadAsJsonAsync<IEnumerable<WalkGoal>>();
     }
 
     public async Task PutWalkGoalAsync(WalkGoal goalToUpdate)

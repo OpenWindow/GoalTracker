@@ -29,31 +29,34 @@ namespace GoalTracker.MvcUI
          //})
          ;
 
-      JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+      //_START_: UNCOMMENT BELOW CODE FOR AUTHENTICATION USING IDENTITY SERVER
 
-      services.AddAuthentication(options =>
-      {
-        options.DefaultScheme = "Cookies";
-        options.DefaultChallengeScheme = "oidc";
-      })
-      .AddCookie("Cookies")
-      .AddOpenIdConnect("oidc", options =>
-      {
-        options.SignInScheme = "Cookies";
+      //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
-        options.Authority = "http://localhost:5000";
-        options.RequireHttpsMetadata = false;
+      //services.AddAuthentication(options =>
+      //{
+      //  options.DefaultScheme = "Cookies";
+      //  options.DefaultChallengeScheme = "oidc";
+      //})
+      //.AddCookie("Cookies")
+      //.AddOpenIdConnect("oidc", options =>
+      //{
+      //  options.SignInScheme = "Cookies";
 
-        options.ClientId = "openIdConnectClientMvcUI";
+      //  options.Authority = "http://localhost:5000";
+      //  options.RequireHttpsMetadata = false;
 
-        options.ResponseType = "code id_token";
-        options.SaveTokens = true;
-        options.ClientSecret = "secret";
-        options.GetClaimsFromUserInfoEndpoint = true;
+      //  options.ClientId = "openIdConnectClientMvcUI";
+
+      //  options.ResponseType = "code id_token";
+      //  options.SaveTokens = true;
+      //  options.ClientSecret = "secret";
+      //  options.GetClaimsFromUserInfoEndpoint = true;
 
 
-      })
-        ;
+      //})
+      //  ;
+      //_END_: UNCOMMENT BELOW CODE FOR AUTHENTICATION USING IDENTITY SERVER 
 
       //services.AddDbContext<ApplicationDbContext>(options =>
       //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));

@@ -14,19 +14,19 @@
     <thead>
         <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.WalkGoals[0].Name)
+                    @Html.DisplayNameFor(model => model.WalkGoals.FirstOrDefault().Name)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.WalkGoals[0].StartDate)
+                    @Html.DisplayNameFor(model => model.WalkGoals.FirstOrDefault().StartDate)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.WalkGoals[0].EndDate)
+                    @Html.DisplayNameFor(model => model.WalkGoals.FirstOrDefault().EndDate)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.WalkGoals[0].TargetDistance)
+                    @Html.DisplayNameFor(model => model.WalkGoals.FirstOrDefault().TargetDistance)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.WalkGoals[0].Description)
+                    @Html.DisplayNameFor(model => model.WalkGoals.FirstOrDefault().Description)
                 </th>
             <th></th>
         </tr>

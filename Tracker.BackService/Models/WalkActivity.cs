@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Tracker.BackService.Models
 {
-  public class WalkSegment
+  public class WalkActivity
   {
     public int Id { get; set; }
     public DateTimeOffset StartTime { get; set; }
