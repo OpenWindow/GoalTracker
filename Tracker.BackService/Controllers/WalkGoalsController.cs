@@ -36,6 +36,15 @@ namespace Tracker.BackService.Controllers
       return _context.WalkGoals.Find(id);
     }
 
+    [HttpGet("{id}/activities")]
+    public WalkGoal GetWalkGoalWithActivities(int id)
+    {
+      return _context.WalkGoals
+        .Where(g => g.Id == id)
+        .Include(g => g.Activity)
+        .FirstOrDefault();
+    }
+
     // POST api/values
     [HttpPost]
     public async Task<IActionResult> PostAsync([FromBody]WalkGoal value)

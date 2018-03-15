@@ -26,10 +26,14 @@ body {
     margin: 15px;
 }
 
+.dashboard-number {
+  font-family: 'Special Elite', cursive;
+  font-size: xx-large;
+}
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
+  /* Hide captions */
+  .carousel-caption {
         display: none;
     }
 }

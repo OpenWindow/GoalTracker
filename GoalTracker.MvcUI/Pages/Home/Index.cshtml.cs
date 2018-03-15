@@ -18,29 +18,38 @@ namespace GoalTracker.MvcUI.Pages
       _apiClient = apiClient;
     }
 
-    public DashboardViewModel DashBoard { get; set; }
+    public WalkProgress TodayProgress { get; set; }
+    public WalkProgress WeekProgress { get; set; }
+    public WalkProgress MonthProgress { get; set; }
 
     public async Task OnGetAsync()
     {
       var goal = await _apiClient.GetCurrentWalkGoalAsync();
 
-      // var activity = await _apiClient.GetActivityAsync();
+      TodayProgress = new WalkProgress()
+      {
+        Title = "TODAY",
+        Target = 3,
+        Current = 2
+      };
 
-      DashBoard = new DashboardViewModel();
-      DashBoard.Total = 1000D;
-      DashBoard.Current = 200D;
 
-      DashBoard.TodayCurrent = 3D;
-      DashBoard.TodayCurrent = 2D;
+      WeekProgress = new WalkProgress()
+      {
+        Title = "THIS WEEK",
+        Target = 20,
+        Current = 18
+      };
 
-      DashBoard.WeekCurrent = 10D;
-      DashBoard.WeekTotal = 20D;
-
-      DashBoard.MonthCurrent = 30D;
-      DashBoard.MonthTotal = 84D;
+      MonthProgress = new WalkProgress()
+      {
+        Title = "THIS MONTH",
+        Target = 90,
+        Current = 45
+      };
 
     }
   }
 
- 
+
 }

@@ -28,7 +28,8 @@ namespace Tracker.BackService
     {
       services.AddMvc();
 
-      services.AddDbContext<TrackerContext>(options => options.UseSqlite("Data Source=WalkTracker.db"));
+      services.AddDbContext<TrackerContext>(options =>
+        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
       services.AddSwaggerGen(options =>
       {

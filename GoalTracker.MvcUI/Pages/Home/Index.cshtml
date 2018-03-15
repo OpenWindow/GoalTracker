@@ -1,5 +1,5 @@
 ﻿@page
-@model IndexModel
+@model GoalTracker.MvcUI.Pages.IndexModel
 @{
   ViewData["Title"] = "Home page";
 }
@@ -16,36 +16,30 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 text-center">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h4>TODAY</h4>
-          </div>
-          <div class="panel-body">
-            @Model.DashBoard.TodayCurrent
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 text-center">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h4>THIS WEEK</h4>
-          </div>
-          <div class="panel-body">
-            @Model.DashBoard.WeekCurrent
+      <vc:walk-progress progress="Model.TodayProgress"></vc:walk-progress>
+      <vc:walk-progress progress="Model.WeekProgress"></vc:walk-progress>
+      <vc:walk-progress progress="Model.MonthProgress"></vc:walk-progress>
+
+      @*<div class=" col-md-4 text-center">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h4>THIS WEEK</h4>
+            </div>
+            <div class="panel-body">
+              @Model.DashBoard.WeekCurrent
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-md-4 text-center">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h4>THIS MONTH</h4>
+        <div class="col-md-4 text-center">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h4>THIS MONTH</h4>
+            </div>
+            <div class="panel-body">
+              @Model.DashBoard.MonthCurrent
+            </div>
           </div>
-          <div class="panel-body">
-            @Model.DashBoard.MonthCurrent
-          </div>
-        </div>
-      </div>
+        </div>*@
     </div>
   </div>
   <div class="col-md-6 col-lg-6">

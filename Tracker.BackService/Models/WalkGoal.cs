@@ -16,9 +16,11 @@ namespace Tracker.BackService.Models
     public string Name { get; set; }
     [Required]
     [Display(Name = "Start Date")]
+    [DataType(DataType.Date)]
     public DateTime StartDate { get; set; }
     [Required]
     [Display(Name = "End Date")]
+    [DataType(DataType.Date)]
     public DateTime EndDate { get; set; }
     [Required]
     [Display(Name="Total Distance to Walk")]
@@ -34,5 +36,7 @@ namespace Tracker.BackService.Models
     public bool WalkOnFriday { get; set; } = true;
     public bool WalkOnSaturday { get; set; } = false;
     public bool WalkOnSunday { get; set; } = false;
+
+    public ICollection<WalkActivity> Activity { get; set; }
   }
 }
