@@ -49,14 +49,69 @@ namespace Tracker.BackService.Controllers
     [HttpPost]
     public async Task<IActionResult> PostAsync([FromBody]WalkGoal value)
     {
-      if(!ModelState.IsValid)
+      if (!ModelState.IsValid)
       {
         return BadRequest(ModelState);
       }
+
+      // calculate weekly, monthly targets here..
+      List<WalkActivity> walkActivities = new List<WalkActivity>();
+
+      for (var day = value.StartDate.Date; day.Date <= value.EndDate; day = day.AddDays(1))
+      {
+        WalkActivity activity = new WalkActivity();
+        activity.WalkGoalId = value.Id;
+        activity.Date = day.Date;
+        activity.TargetDistance = GetTargetDistance(day, value);
+        walkActivities.Add(activity);
+      }
+
+      var workoutDays =(int)walkActivities.Sum(item => item.TargetDistance);
+      double walkPerDay = Math.Round((double)value.TargetDistance / workoutDays, 2);
+
+      walkActivities = walkActivities.Select(x =>
+      {
+        x.TargetDistance = x.TargetDistance * (float)walkPerDay;
+        return x;
+      }).ToList();
+
       _context.WalkGoals.Add(value);
-     await _context.SaveChangesAsync();
+
+      await _context.WalkActivity.AddRangeAsync(walkActivities.ToArray());
+
+      await _context.SaveChangesAsync();
 
       return Ok();
+    }
+
+    private float GetTargetDistance(DateTime day, WalkGoal value)
+    {
+      var target = 0;
+      switch (day.DayOfWeek)
+      {
+        case (DayOfWeek.Monday):
+          target = value.WalkOnMonday ? 1 : 0;
+          break;
+        case (DayOfWeek.Tuesday):
+          target = value.WalkOnTuesday ? 1 : 0;
+          break;
+        case (DayOfWeek.Wednesday):
+          target = value.WalkOnWednesday ? 1 : 0;
+          break;
+        case (DayOfWeek.Thursday):
+          target = value.WalkOnThursday ? 1 : 0;
+          break;
+        case (DayOfWeek.Friday):
+          target = value.WalkOnFriday ? 1 : 0;
+          break;
+        case (DayOfWeek.Saturday):
+          target = value.WalkOnSaturday ? 1 : 0;
+          break;
+        case (DayOfWeek.Sunday):
+          target = value.WalkOnSunday ? 1 : 0;
+          break;
+      }
+      return target;
     }
 
     // PUT api/values/5
@@ -84,8 +139,8 @@ namespace Tracker.BackService.Controllers
     public async Task<IActionResult> Delete(int id)
     {
       var myGoal = _context.WalkGoals.Find(id);
-      
-      if(myGoal == null)
+
+      if (myGoal == null)
       {
         return NotFound();
       }
@@ -101,7 +156,7 @@ namespace Tracker.BackService.Controllers
     public async Task<WalkGoal> GetCurrentAsync()
     {
       var walkGoal = await _context.WalkGoals.AsNoTracking()
-        .Where(g =>( DateTime.Now >= g.StartDate && DateTime.Now <= g.EndDate) && !g.Archive)
+        .Where(g => (DateTime.Now >= g.StartDate && DateTime.Now <= g.EndDate) && !g.Archive)
         .FirstOrDefaultAsync();
 
       return walkGoal;
