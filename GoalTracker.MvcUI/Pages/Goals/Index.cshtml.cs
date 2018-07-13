@@ -1,31 +1,26 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using GoalTracker.MvcUI.Data;
-using Tracker.BackService.Models;
-using GoalTracker.MvcUI.Services;
-using Microsoft.AspNetCore.Authorization;
+using Tracker.Core.Data;
+using Tracker.Core.Data.Specifications;
+using Tracker.Core.Model;
 
 namespace GoalTracker.MvcUI.Pages.Goals
 {
   public class IndexModel : PageModel
   {
-    private readonly IApiClient _apiClient;
+    private readonly IRepository _repo;
 
-    public IndexModel(IApiClient apiClient)
+    public IndexModel(IRepository repo)
     {
-      _apiClient = apiClient;
+      _repo = repo;
     }
 
     public IEnumerable<WalkGoal> WalkGoals { get; set; }
 
-    public async Task OnGetAsync()
+    public void OnGet()
     {
-      WalkGoals = await _apiClient.GetWalkGoalsAsync();
+      WalkGoals = _repo.List(GoalPolicy.All());
     }
   }
 }

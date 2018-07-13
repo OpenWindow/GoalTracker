@@ -1,37 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using GoalTracker.MvcUI.Data;
-using Tracker.BackService.Models;
-using GoalTracker.MvcUI.Services;
+using System;
+using System.Threading.Tasks;
+using Tracker.Core.Data;
+using Tracker.Core.Data.Specifications;
+using Tracker.Core.Model;
 
 namespace GoalTracker.MvcUI.Pages.Goals
 {
   public class EditModel : PageModel
   {
-    private readonly IApiClient _apiClient;
+    private readonly IRepository _repo;
 
-    public EditModel(IApiClient apiClient)
+    public EditModel(IRepository repo)
     {
-      _apiClient = apiClient;
+      _repo = repo;
     }
 
     [BindProperty]
     public WalkGoal WalkGoal { get; set; }
 
-    public async Task<IActionResult> OnGetAsync(int? id)
+    public IActionResult OnGet(Guid? id)
     {
       if (id == null)
       {
         return NotFound();
       }
 
-      WalkGoal = await _apiClient.GetWalkGoalAsync(id.Value);
+      WalkGoal = _repo.Single(GoalPolicy.ById(id.Value));
 
       if (WalkGoal == null)
       {
@@ -40,15 +37,36 @@ namespace GoalTracker.MvcUI.Pages.Goals
       return Page();
     }
 
-    public async Task<IActionResult> OnPostAsync()
+    public IActionResult OnPost()
     {
       if (!ModelState.IsValid)
       {
         return Page();
       }
-      await _apiClient.PutWalkGoalAsync(WalkGoal);
+
+      try
+      {
+        _repo.Update(WalkGoal);
+      }
+      catch (DbUpdateConcurrencyException)
+      {
+
+        if(!GoalExists(WalkGoal.Id))
+        {
+          return NotFound();
+        }
+        else
+        {
+          throw;
+        }
+      }
 
       return RedirectToPage("./Index");
+    }
+
+    private bool GoalExists(Guid id)
+    {
+      return _repo.Single(GoalPolicy.ById(id)) != null;
     }
   }
 }

@@ -6,6 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using GoalTracker.MvcUI.Services;
 using System.Net.Http;
 using System.IdentityModel.Tokens.Jwt;
+using Tracker.Core.Data;
+using Tracker.Data.Ef;
+using Microsoft.EntityFrameworkCore;
 
 namespace GoalTracker.MvcUI
 {
@@ -58,15 +61,14 @@ namespace GoalTracker.MvcUI
       //  ;
       //_END_: UNCOMMENT BELOW CODE FOR AUTHENTICATION USING IDENTITY SERVER 
 
-      //services.AddDbContext<ApplicationDbContext>(options =>
-      //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+      services.AddDbContext<ApplicationDbContext>(options =>
+          options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
       //services.AddIdentity<ApplicationUser, IdentityRole>()
       //    .AddEntityFrameworkStores<ApplicationDbContext>()
       //    .AddDefaultTokenProviders();
 
-      services.AddScoped(_ => new HttpClient() { BaseAddress = new Uri(Configuration["serviceUrl"]) });
-      services.AddScoped<IApiClient, ApiClient>();
+      services.AddScoped<IRepository, EfCoreRepository>();
     
 
       // Register no-op EmailSender used by account confirmation and password reset during development
@@ -80,7 +82,6 @@ namespace GoalTracker.MvcUI
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
-        app.UseBrowserLink();
         app.UseDatabaseErrorPage();
       }
       else

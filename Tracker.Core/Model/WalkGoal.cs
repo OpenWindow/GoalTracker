@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace Tracker.BackService.Models
+namespace Tracker.Core.Model
 {
-  public class WalkGoal
+  public class WalkGoal : BaseEntity
   {
-    // TO DO: Move the data annotations to DTO objects and keep the domain
-    // models clean.
-    [Key]
-    public int Id { get; set; }
     [Required]
     public string Name { get; set; }
     [Required]
@@ -36,11 +31,6 @@ namespace Tracker.BackService.Models
     public bool WalkOnFriday { get; set; } = true;
     public bool WalkOnSaturday { get; set; } = false;
     public bool WalkOnSunday { get; set; } = false;
-
-    // Target
-    public double TodayTarget { get; set; }
-    public double ThisWeekTarget { get; set; }
-    public double ThisMonthTarget { get; set; }
 
     public ICollection<WalkActivity> Activity { get; set; }
   }

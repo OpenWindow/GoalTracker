@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace GoalTracker.MvcUI.Data.Migrations
+namespace Tracker.Data.Ef
 {
     public partial class CreateIdentitySchema : Migration
     {

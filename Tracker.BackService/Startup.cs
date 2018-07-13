@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
-using Tracker.BackService.Data;
-using Microsoft.EntityFrameworkCore;
+using Tracker.Data.Ef;
 
 namespace Tracker.BackService
 {
@@ -28,7 +22,7 @@ namespace Tracker.BackService
     {
       services.AddMvc();
 
-      services.AddDbContext<TrackerContext>(options =>
+      services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
       services.AddSwaggerGen(options =>
@@ -57,7 +51,7 @@ namespace Tracker.BackService
 
       app.UseMvc();
 
-      TrackerContext.SeedData(app.ApplicationServices);
+      //TrackerContext.SeedData(app.ApplicationServices);
     }
   }
 }

@@ -6,16 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using GoalTracker.MvcUI.Services;
 using GoalTracker.MvcUI.ViewModels;
+using Tracker.Core.Data;
 
 namespace GoalTracker.MvcUI.Pages
 {
   public class IndexModel : PageModel
   {
-    private readonly IApiClient _apiClient;
+    private readonly IRepository _repo;
 
-    public IndexModel(IApiClient apiClient)
+    public IndexModel(IRepository repo)
     {
-      _apiClient = apiClient;
+      _repo = repo;
     }
 
     public WalkProgress TodayProgress { get; set; }
@@ -24,7 +25,7 @@ namespace GoalTracker.MvcUI.Pages
 
     public async Task OnGetAsync()
     {
-      var goal = await _apiClient.GetCurrentWalkGoalAsync();
+      //var goal = await _apiClient.GetCurrentWalkGoalAsync();
 
       TodayProgress = new WalkProgress()
       {

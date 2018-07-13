@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Tracker.BackService.Models;
-
-namespace GoalTracker.MvcUI.ViewModels
+﻿namespace GoalTracker.MvcUI.ViewModels
 {
   public class DashboardViewModel
   {

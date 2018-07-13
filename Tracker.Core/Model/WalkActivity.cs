@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace Tracker.BackService.Models
+namespace Tracker.Core.Model
 {
-  public class WalkActivity
+  public class WalkActivity : BaseEntity
   {
-    public int Id { get; set; }
-    public int WalkGoalId { get; set; }
+    public Guid WalkGoalId { get; set; }
     public DateTime Date { get; set; }
     public DateTimeOffset StartTime { get; set; }
     public DateTimeOffset EndTime { get; set; }
@@ -19,4 +17,3 @@ namespace Tracker.BackService.Models
     public WalkGoal WalkGoal { get; set; }
   }
 }
-  

@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using GoalTracker.MvcUI.Data;
-using Tracker.BackService.Models;
-using GoalTracker.MvcUI.Services;
+using System.Threading.Tasks;
+using Tracker.Core.Data;
+using Tracker.Core.Model;
 
 namespace GoalTracker.MvcUI.Pages.Goals
 {
   public class CreateModel : PageModel
   {
-    private readonly IApiClient _apiClient;
+    private readonly IRepository _repo;
 
-    public CreateModel(IApiClient apiClient)
+    public CreateModel(IRepository repo)
     {
-      _apiClient = apiClient;
+      _repo = repo;
     }
 
     public IActionResult OnGet()
@@ -28,14 +23,14 @@ namespace GoalTracker.MvcUI.Pages.Goals
     [BindProperty]
     public WalkGoal WalkGoal { get; set; }
 
-    public async Task<IActionResult> OnPostAsync()
+    public IActionResult OnPost()
     {
       if (!ModelState.IsValid)
       {
         return Page();
       }
 
-      await _apiClient.AddWalkGoalAsync(WalkGoal);
+      _repo.Create(WalkGoal);
 
       return RedirectToPage("./Index");
     }
